@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>San Valentino 💙</title>
+
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #dff1ff, #9fd3ff);
+    }
+
+    .card{
+      background:white;
+      padding:30px 25px;
+      border-radius:20px;
+      text-align:center;
+      box-shadow:0 20px 50px rgba(0,0,0,.15);
+      width:min(500px, 90vw);
+      position:relative;
+    }
+
+    .emoji{
+      font-size:50px;
+      margin-bottom:10px;
+    }
+
+    h1{
+      font-size:26px;
+      margin-bottom:25px;
+    }
+
+    .buttons{
+      position:relative;
+      height:70px;
+      display:flex;
+      justify-content:center;
+      gap:15px;
+    }
+
+    button{
+      border:none;
+      border-radius:999px;
+      padding:12px 25px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    #yes{
+      background:#3aa0ff;
+      color:white;
+      box-shadow:0 10px 20px rgba(58,160,255,.4);
+    }
+
+    #no{
+      background:#eee;
+      position:absolute;
+      right:0;
+    }
+
+    .hint{
+      margin-top:15px;
+      font-size:13px;
+      opacity:.7;
+      min-height:18px;
+    }
+
+    .popup{
+      position:fixed;
+      inset:0;
+      display:none;
+      justify-content:center;
+      align-items:center;
+      background:rgba(0,0,0,.4);
+    }
+
+    .popup .box{
+      background:white;
+      padding:25px;
+      border-radius:20px;
+      text-align:center;
+      width:min(400px, 90vw);
+    }
+
+    .popup button{
+      margin-top:15px;
+      background:#3aa0ff;
+      color:white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="emoji">💙</div>
+    <h1>Andrea,<br>vuoi essere il mio <br><strong>San Valentino?</strong> 💘</h1>
+
+    <div class="buttons" id="area">
+      <button id="yes">Sì</button>
+      <button id="no">No</button>
+    </div>
+
+    <div class="hint" id="hint">Il “No” sembra un po’ timido 😏</div>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="box">
+      <div style="font-size:40px">🥰🎉</div>
+      <h2>Sapevo che avresti detto sì!</h2>
+      <p>Buon San Valentino 💙</p>
+      <button onclick="closePopup()">Chiudi</button>
+    </div>
+  </div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const area = document.getElementById("area");
+  const hint = document.getElementById("hint");
+  const popup = document.getElementById("popup");
+
+  const frasi = [
+    "Il “No” sembra un po’ timido 😏",
+    "Dai Andrea… 😌",
+    "Non fare il difficile 😇",
+    "Lo sappiamo entrambi 😘"
+  ];
+
+  let i = 0;
+
+  function moveNo(){
+    const a = area.getBoundingClientRect();
+    const b = noBtn.getBoundingClientRect();
+
+    const maxX = Math.max(0, a.width - b.width);
+    const maxY = Math.max(0, a.height - b.height);
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+    noBtn.style.right = "auto";
+
+    hint.textContent = frasi[Math.min(i, frasi.length - 1)];
+    i++;
+  }
+
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveNo();
+  }, {passive:false});
+
+  yesBtn.addEventListener("click", () => {
+    popup.style.display = "flex";
+  });
+
+  function closePopup(){
+    popup.style.display = "none";
+  }
+</script>
+
+</body>
+</html>
